@@ -1,4 +1,4 @@
-Zak.js  ( Build everything on local side, server side is just a service provider)
+Zak.js 
 ===
 
 Zak is a phonegap framework. The main targets of this framework as below:
@@ -10,7 +10,12 @@ Zak is a phonegap framework. The main targets of this framework as below:
  - Build all pages on background. Smooth switching page in one html file.
  
 
+<strong>Build everything on local side, server side is just a service provider</strong>
+
+
 
 Live Demo
 ===
 http://beerfriday.net/tpp/web/index.html
+
+
