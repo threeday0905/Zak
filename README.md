@@ -16,6 +16,9 @@ Zak is a phonegap framework. The main targets of this framework as below:
 
 Live Demo
 ===
-http://beerfriday.net/tpp/web/index.html
 
+1. One app in a page
+   http://beerfriday.net/tpp/web/index.html 
 
+2. Multi apps in a page
+   http://beerfriday.net/herman/zak/index.html
