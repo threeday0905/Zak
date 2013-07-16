@@ -2,11 +2,6 @@
 function testJSHint() {
 	'use strict';
 	var obj = {};
-	if (obj['name']) {
-		window.alert('abc');
-	}
-
-
 
 
 }
