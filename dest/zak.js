@@ -827,6 +827,12 @@ var ajax = function(url, options, methods) {
   exports.Kaz = Kaz;
 }(window));
 
+/*
+ *  Plugin Name: Zak v0.8
+ *  Author: Herman Lee
+ *  Description: A PhoneGap Framework to easily build APPs on local side.
+ */
+
 (function(window) {
   'use strict';
 
@@ -866,7 +872,8 @@ var ajax = function(url, options, methods) {
       mtrParameter: 'data-page-parameter',
       btnSwitch: 'data-btn-switch',
       btnRefresh: 'data-btn-refresh',
-      btnBack: 'data-btn-back'
+      btnBack: 'data-btn-back',
+      btnExtenal: 'data-btn-external'
     },
     sourceType: [
       { name: 'template', dataType: 'html'   },
@@ -891,21 +898,21 @@ var ajax = function(url, options, methods) {
 
   /* B: Core Class - Source */
   Source = function(options) {
+    var SourceItem; //sub class
+    var setting = swak.oo.mixin( {}, {
+      storageKey: config.storageKey,
+      sourceType: config.sourceType,
+      sourcePath: config.sourcePath,
+      sourceProxy: {}
+    }, options);
     var
-      SourceItem, //sub class
-      setting = swak.oo.mixin( {
-        storageKey: config.storageKey,
-        sourceType: config.sourceType,
-        sourcePath: config.sourcePath,
-        sourceProxy: {}
-      }, options),
-      cache = new swak.storage(setting.storageKey),
-      remote = function(sourceItem) { return swak.ajax(sourceItem.path(), { dataType: sourceItem.dataType }); },
-      memCache = {},
-      proxy = setting.sourceProxy,
-      path = setting.sourcePath,
-      types = swak.to.obj(setting.sourceType, 'name'),
-      timer = new swak.timer();
+        cache = new swak.storage(setting.storageKey + ( setting.id ? '_' + setting.id : '' )),
+        remote = function(sourceItem) { return swak.ajax(sourceItem.path(), { dataType: sourceItem.dataType }); },
+        memCache = {},
+        proxy = setting.sourceProxy,
+        path = setting.sourcePath,
+        types = swak.to.obj(setting.sourceType, 'name'),
+        timer = new swak.timer();
 
     SourceItem = function(type, key, options2) {
       if (!type || !key) { return undefined; }
@@ -936,8 +943,15 @@ var ajax = function(url, options, methods) {
           this.value = remote(this);
           this.cache = false;
           cache.put(this);
+          memCache[this.toString()] = this.value;
         } else {
-          this.value = cache.take(this);
+          if (memCache[this.toString()]) {
+            this.value = memCache[this.toString()];
+          } else {
+            this.value = cache.take(this);
+            memCache[this.toString()] = this.value;
+          }
+
         }
       }
 
@@ -956,25 +970,20 @@ var ajax = function(url, options, methods) {
         return this.value;
       },
       path: function() {
-        var
-          self = this,
-          defaultFn = function() {
-            var result = (path[self.type] || '').replace(/\$\{(\w)\}/g,
-              function(match, val) {
-                switch (val) {
-                case '0':
-                  return self.key;
-                case '1':
-                  return self.type;
-                case '2':
-                  return self.dataType;
-                default:
-                  return match;
-                }
-              }
-            );
-            return result;
-          };
+        var self = this, defaultFn = function() {
+          return (path[self.type] || '').replace(/\$\{(\w)\}/g, function(match, val) {
+            switch (val) {
+            case '0':
+              return self.key;
+            case '1':
+              return self.type;
+            case '2':
+              return self.dataType;
+            default:
+              return match;
+            }
+          });
+        };
         return swak.is.fn(proxy.path) ? proxy.path.call(self, defaultFn) : defaultFn();
       },
       needRefresh: function() {
@@ -990,7 +999,13 @@ var ajax = function(url, options, methods) {
       return data.value;
     };
 
-    this.clear = cache.clear;
+    this.clear = function() {
+      if (cache && cache.clear) {
+        cache.clear();
+      }
+      memCache = {};
+    };
+    this.path = path;
   };
   /* E: Core Class - Source */
 
@@ -1023,7 +1038,7 @@ var ajax = function(url, options, methods) {
       if (pas === true && !swak.is.empty(lastParameter)) {
         pas = lastParameter;
       }
-      if (pas) {
+      if (swak.is.obj(pas) && pas.items) {
         lastParameter = pas;
         data[setting.parameterName] = pas.items;
       } else if (data[setting.parameterName]) {
@@ -1036,11 +1051,13 @@ var ajax = function(url, options, methods) {
       if (fts === true && !swak.is.empty(lastFilter)) {
         fts = lastFilter;
       }
-      if (fts) {
+      if (swak.is.obj(fts)) {
         lastFilter = fts;
         data[setting.filterName] = {};
         fts = swak.to.arr(fts).forEach(function(ft) {
-          data[setting.filterName][ft.dataName] = ft.reduce(data);
+          if (swak.is.fn(ft.reduce)) {
+            data[setting.filterName][ft.dataName] = ft.reduce(data);
+          }
         });
       } else if (data[setting.filterName]) {
         lastFilter = null;
@@ -1253,7 +1270,7 @@ var ajax = function(url, options, methods) {
     load: function(reload) {
       if (reload) { this.cache = {}; }
 
-      this.template.load(this.key, reload);
+      this.template.load(this.setting.template || this.key, reload);
       this.material.load(this.setting.material, reload);
 
       this.script.clear();
@@ -1456,9 +1473,10 @@ var ajax = function(url, options, methods) {
         var page = btn.getAttribute(keys.btnSwitch);
         if (!page || swak.dom.data.take(btn, 'btnEvtBinded')) { return;}
         swak.evt.touch(btn, function() {
-          zak.switchTo(page, {
-            filter: mer.Filter.create(btn.getAttribute(keys.mtrFilter)),
-            parameter: mer.Parameter.create(btn.getAttribute(keys.mtrParameter))
+          zak.switchTo({
+            key: page,
+            filter: btn.getAttribute(keys.mtrFilter),
+            parameter: btn.getAttribute(keys.mtrParameter)
           });
         });
         swak.dom.data.put(btn, 'btnEvtBinded', true);
@@ -1476,19 +1494,36 @@ var ajax = function(url, options, methods) {
     }
 
     function bindExternalLink(ele) {
-      if (!flag.phonegap) { return; }
-      var links = ele.querySelectorAll('[target=_blank'), url,
+      var links = ele.querySelectorAll('[target=_blank]'), url,
           reg = /^https?:\/\//;
       each.call(links, function(link) {
-        if (swak.dom.data.put(link, 'extLinkBinded')) { return;}
+        if (swak.dom.data.take(link, 'extLinkBinded')) { return;}
         url = link.getAttribute('href');
         if (reg.test(url)) {
-          swak.evt.click(link, function() { window.open(url, '_system'); });
+          swak.evt.touch(link, function(e) {
+            window.open(url, '_system');
+            e.preventDefault();
+          });
         }
         swak.dom.data.put(link, 'extLinkBinded', true);
       });
     }
 
+    function bindExternalLinkButton(ele) {
+      var links = ele.querySelectorAll('[' + keys.btnExtenal + ']'), url,
+          reg = /^https?:\/\//;
+      each.call(links, function(link) {
+        if (swak.dom.data.take(link, 'extLinkBinded')) { return;}
+        url = link.getAttribute(keys.btnExtenal);
+        if (reg.test(url)) {
+          swak.evt.touch(link, function(e) {
+            window.open(url, flag.phonegap ? '_system' : '_blank' );
+            e.preventDefault();
+          });
+        }
+        swak.dom.data.put(link, 'extLinkBinded', true);
+      });
+    }
 
     return {
       pageSwitched: function(zak) {
@@ -1522,9 +1557,9 @@ var ajax = function(url, options, methods) {
         var els = swak.to.arr(items), len = els.length;
         while (len--) {
           bindPageBtn(els[len]);
+          bindExternalLinkButton(els[len]);
           if (flag.phonegap) {
             bindExternalLink(els[len]);
-
           }
         }
       }
@@ -1542,7 +1577,7 @@ var ajax = function(url, options, methods) {
         helper = new ZakHelper(this, setting),
         appItemOpt = { containerId: setting.containerId, render: helper.clipElement };
 
-    this.id = options.id || ('Zak_' + new Date().valueOf());
+    this.id = options.id || '';
     this.setting = setting;
     this.helper = helper;
     this.source = source;
@@ -1567,12 +1602,17 @@ var ajax = function(url, options, methods) {
 
     if (setting.indexPage) {
       self.switchTo(setting.indexPage);
+    } else if (setting.pages.length) {
+      self.switchTo(setting.pages[0].key);
     }
 
   };
 
   Zak.prototype = {
     getPageOpt: function(pageName, pageOpt) {
+      if (!this.pageOpts[pageName]) {
+        this.pageOpts[pageName] = {};
+      }
       if (pageOpt) {
         this.pageOpts[pageName] = swak.oo.mixin(this.pageOpts[pageName], pageOpt);
       }
@@ -1593,29 +1633,61 @@ var ajax = function(url, options, methods) {
     getPage: function(pageName) {
       return this.pages[pageName] || this.loadPage(pageName);
     },
-    switchTo: function(pageItem, data, reload) {
-      var self = this;
-      function goToPage() {
-        var pageName = swak.is.str(pageItem) ? pageItem : pageItem.key,
+    switchTo: function() {
+
+      function getSwitchOpt() {
+        var opts = {}, obj;
+
+        if (swak.is.str(arguments[0]) || arguments[0] instanceof Page) {
+          opts.pageItem = arguments[0] || '';
+          opts.data = arguments[1] || undefined;
+          opts.reload = !!arguments[2];
+        } else if (swak.is.obj(arguments[0])) {
+          obj = arguments[0];
+          opts.pageItem = obj.key;
+          opts.data = undefined;
+          if (swak.is.obj(opts.data)) {
+            opts.data = opts.data;
+          } else if (obj.filter || obj.parameter) {
+            opts.data = {};
+
+            if (obj.filter) {
+              opts.data.filter = swak.is.str(obj.filter) ? Material.Filter.create(obj.filter) : obj.filter;
+            }
+
+            if (obj.parameter) {
+              opts.data.parameter = swak.is.str(obj.parameter) ? Material.Parameter.create(obj.parameter) : obj.parameter;
+            }
+          }
+
+          opts.reload = !!(obj.reload || obj.refresh);
+        }
+
+
+        return opts;
+      }
+
+      function goToPage(opts) {
+        var pageName = swak.is.str(opts.pageItem) ? opts.pageItem : opts.pageItem.key,
             page = self.getPage(pageName),
             refreshPage = false;
 
         if (!page) { return false; }
 
-        if (reload) {
+        if (opts.reload) {
           page.reload(true);
         }
 
-        refreshPage = reload || ( self.pageCurrent === page );
+        refreshPage = opts.reload || ( self.pageCurrent === page );
 
         if (!refreshPage) {
           self.pageLast = self.pageCurrent;
           self.pageCurrent = page;
         }
 
-        if (data) {
-          page.filter(data.isFilter ? data : data.filter);
-          page.parameter(data.isParameter ? data : data.parameter);
+        if (opts.data) {
+          page.filter(opts.data.isFilter ? opts.data : opts.data.filter);
+          page.parameter(opts.data.isParameter ? opts.data : opts.data.parameter);
         }
 
         self.container.update(page);
@@ -1630,15 +1702,20 @@ var ajax = function(url, options, methods) {
 
         self.helper.pageSwitched(self);
       }
+
+      var self = this,
+          opts = getSwitchOpt.apply(self, arguments);
+
       if (this.mask && this.setting.mask.className ) {
         this.mask.update('show', this.setting.mask.className);
         setTimeout(function() {
-          goToPage();
+          goToPage(opts);
           self.mask.update('hide', self.setting.mask.className);
         }, 50);
       } else {
-        goToPage();
+        goToPage(opts);
       }
+
     },
     backTo: function() {
       if (this.pageLast) {
@@ -1666,6 +1743,13 @@ var ajax = function(url, options, methods) {
   };
   Zak.createParameter = function() {
     return Material.Parameter.create.apply(undefined, arguments);
+  };
+  Zak.clearAll = function() {
+    Zak.instances.forEach(function(zak) {
+      zak.source.clear();
+      zak.pages = [];
+    });
+    swak.storage.clear();
   };
   Zak.registerScript = function(par1, par2, par3) {
     var zak, pageName, script;
