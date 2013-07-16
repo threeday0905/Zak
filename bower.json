@@ -1,0 +1,14 @@
+{
+  "name": "Zak",
+  "version": "0.1.2",
+  "main": "zak.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "handlebars": "~1.0.0",
+    "jquery": "1.10.2"
+  }
+}
