@@ -2,7 +2,7 @@
  * Author: Herman Lee <threeday0905@gmail.com>
  * Description: Phonegap framework, an easy way to build SPA on local side
  * Dependencies: jQuery, Handlebars.js
- * Date: 2013-07-16 */
+ * Date: 2013-07-18 */
 (function(window) {
   'use strict';
 
@@ -882,10 +882,10 @@ var ajax = function(url, options, methods) {
       { name: 'material', dataType: 'json'   }
     ],
     sourcePath: {
-      element:  './source/element/${0}.html',
-      template: './source/template/${0}.html',
-      material: './source/material/${0}.json',
-      script:   './source/script/${0}.js'
+      element:  './resource/element/${0}.html',
+      template: './resource/template/${0}.html',
+      material: './resource/material/${0}.json',
+      script:   './resource/script/${0}.js'
     },
     storageKey: 'zak_Source',
     material: {
