@@ -924,9 +924,10 @@ var ajax = function(url, options, methods) {
     SourceItem = function(type, key, options2) {
       if (!type || !key) { return undefined; }
 
-      var setting2 = swak.oo.mixin({ refresh: false }, options2),
-          typeObj = swak.to.objByKey(type, types),
-          reload = setting2.refresh || this.needRefresh();
+      var
+        setting2 = swak.oo.mixin({ refresh: false }, options2),
+        typeObj = swak.to.objByKey(type, types),
+        reload = setting2.refresh || this.needRefresh();
 
       this.type = typeObj.name;
       this.dataType = typeObj.dataType;
@@ -1579,12 +1580,22 @@ var ajax = function(url, options, methods) {
 
     Zak.instances.push(this);
 
-    var self = this, setting = swak.oo.mixin({ containerId: containerId}, config, options),
-        source = new Source(setting),
-        helper = new ZakHelper(this, setting),
-        appItemOpt = { containerId: setting.containerId, render: helper.clipElement };
+    var
+      self = this,
+      setting = swak.oo.mixin({ containerId: containerId}, config, options);
 
-    this.id = options.id || options.appName || '';
+    if (!setting.id) {
+      setting.id = setting.appName || '';
+    }
+
+    var
+      source = new Source(setting),
+      helper = new ZakHelper(this, setting);
+
+    var
+      appItemOpt = { containerId: setting.containerId, render: helper.clipElement };
+
+    this.id = setting.id;
     this.setting = setting;
     this.helper = helper;
     this.source = source;
