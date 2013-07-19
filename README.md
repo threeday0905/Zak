@@ -18,10 +18,10 @@ Live Demo
 ==================
 
 1. One app in a page
-   http://beerfriday.net/tpp/web/index.html
+   http://beerfriday.net/zak/example/taipeiParty/index.html
 
 2. Multi apps in a page
-   http://beerfriday.net/herman/zak/index.html
+   http://beerfriday.net/zak/example/multiApp/index.html
 
 
 
