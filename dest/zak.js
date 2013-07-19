@@ -2,7 +2,7 @@
  * Author: Herman Lee <threeday0905@gmail.com>
  * Description: Phonegap framework, an easy way to build SPA on local side
  * Dependencies: jQuery, Handlebars.js
- * Date: 2013-07-18 */
+ * Date: 2013-07-19 */
 (function(window) {
   'use strict';
 
@@ -898,21 +898,28 @@ var ajax = function(url, options, methods) {
 
   /* B: Core Class - Source */
   Source = function(options) {
+
     var SourceItem; //sub class
+
     var setting = swak.oo.mixin( {}, {
       storageKey: config.storageKey,
       sourceType: config.sourceType,
       sourcePath: config.sourcePath,
       sourceProxy: {}
     }, options);
+
     var
-        cache = new swak.storage(setting.storageKey + ( setting.id ? '_' + setting.id : '' )),
-        remote = function(sourceItem) { return swak.ajax(sourceItem.path(), { dataType: sourceItem.dataType }); },
-        memCache = {},
-        proxy = setting.sourceProxy,
-        path = setting.sourcePath,
-        types = swak.to.obj(setting.sourceType, 'name'),
-        timer = new swak.timer();
+      cache = new swak.storage(setting.storageKey + ( setting.id ? '_' + setting.id : '' )),
+      remote = function(sourceItem) { return swak.ajax(sourceItem.path(), { dataType: sourceItem.dataType }); },
+      memCache = {},
+      proxy = setting.sourceProxy,
+      path = setting.sourcePath,
+      types = swak.to.obj(setting.sourceType, 'name'),
+      timer = new swak.timer();
+
+    if (!setting.cache) {
+      cache.available = false;
+    }
 
     SourceItem = function(type, key, options2) {
       if (!type || !key) { return undefined; }
@@ -1577,7 +1584,7 @@ var ajax = function(url, options, methods) {
         helper = new ZakHelper(this, setting),
         appItemOpt = { containerId: setting.containerId, render: helper.clipElement };
 
-    this.id = options.id || '';
+    this.id = options.id || options.appName || '';
     this.setting = setting;
     this.helper = helper;
     this.source = source;
