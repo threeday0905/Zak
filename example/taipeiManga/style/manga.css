@@ -1,0 +1,294 @@
+@charset "UTF-8";
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="../styleheets/manga.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 17, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../WorkStation/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/*Variation setting*/
+/* line 18, sass/manga.scss */
+html, body, #appFrame_container {
+  height: 100%;
+  width: 100%;
+  font: large "微軟正黑體",Arial, Helvetica, sans-serif;
+}
+
+/* line 23, sass/manga.scss */
+.txt_Center {
+  text-align: center;
+}
+
+/* line 24, sass/manga.scss */
+.float_l {
+  float: left;
+}
+
+/* line 27, sass/manga.scss */
+#appFrame_container header {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffff00), color-stop(50%, #ffde00), color-stop(100%, #ffdc00));
+  background-image: -webkit-linear-gradient(#ffff00, #ffde00, #ffdc00);
+  background-image: -moz-linear-gradient(#ffff00, #ffde00, #ffdc00);
+  background-image: -o-linear-gradient(#ffff00, #ffde00, #ffdc00);
+  background-image: linear-gradient(#ffff00, #ffde00, #ffdc00);
+  height: 91px;
+  line-height: 91px;
+  border-bottom: solid 2px #000;
+}
+/* line 33, sass/manga.scss */
+#appFrame_container header h1 {
+  display: inline;
+  font-size: 150%;
+  font-weight: bold;
+  text-shadow: 1px 1px #fff800;
+  margin: auto;
+}
+/* line 40, sass/manga.scss */
+#appFrame_container header h1:after {
+  content: " ";
+  display: inline-block;
+  width: 120px;
+  height: 75px;
+  vertical-align: middle;
+  background: url("../style/images/ic_books.png") 10px no-repeat;
+}
+/* line 48, sass/manga.scss */
+#appFrame_container header a {
+  width: 10%;
+  font-size: 0;
+  position: absolute;
+  top: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+/* line 56, sass/manga.scss */
+#appFrame_container header .back {
+  background-image: url("../style/images/ic_arrow_l.png");
+  left: 0;
+  border-right: solid 2px #000;
+}
+/* line 61, sass/manga.scss */
+#appFrame_container header .menu_list {
+  background-image: url("../style/images/ic_list.png");
+  right: 0;
+  border-left: solid 2px #000;
+}
+/* line 68, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list {
+  background-color: black;
+  text-align: right;
+}
+/* line 71, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list .skew {
+  border: solid 15px #000;
+  background-color: black;
+  -webkit-transform: scale(1.3) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+  -moz-transform: scale(1.3) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+  -o-transform: scale(1.3) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+  transform: scale(1.3) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+  overflow: hidden;
+}
+/* line 77, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list .skew img {
+  overflow: hidden;
+}
+/* line 82, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div {
+  border: solid 15px #000;
+  overflow: hidden;
+}
+/* line 85, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div .list_pic01 {
+  width: 73.43%;
+}
+/* line 89, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div .list_pic02 {
+  width: 24.37%;
+}
+/* line 93, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div .list_pic03 {
+  width: 32.03%;
+  border-right: solid 15px #000;
+  -webkit-transform: scale(1.2) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+  -moz-transform: scale(1.2) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+  -o-transform: scale(1.2) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+  transform: scale(1.2) rotate(0deg) translate(0, 0) skew(0deg, 5deg);
+}
+/* line 100, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div .list_pic04 {
+  width: 65.62%;
+}
+/* line 105, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div .list_pic05,
+#appFrame_container #container_wrap .menu_list div .list_pic08 {
+  width: 100%;
+}
+/* line 109, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div .list_pic06 {
+  width: 72.5%;
+}
+/* line 113, sass/manga.scss */
+#appFrame_container #container_wrap .menu_list div .list_pic07 {
+  width: 25%;
+}
+/* line 120, sass/manga.scss */
+#appFrame_container #container_wrap .store_list li {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-box-align: stretch;
+  -moz-box-align: stretch;
+  -ms-box-align: stretch;
+  box-align: stretch;
+  width: 100%;
+  border-bottom: solid 3px #000;
+  position: relative;
+}
+/* line 128, sass/manga.scss */
+#appFrame_container #container_wrap .store_list li .store_pic {
+  width: 150px;
+}
+/* line 132, sass/manga.scss */
+#appFrame_container #container_wrap .store_list li .store_info {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-box-flex: 1;
+  box-flex: 1;
+  padding: 20px;
+}
+/* line 135, sass/manga.scss */
+#appFrame_container #container_wrap .store_list li .store_info dt {
+  font-weight: bold;
+  font-size: 130%;
+  line-height: 150%;
+}
+/* line 140, sass/manga.scss */
+#appFrame_container #container_wrap .store_list li .store_info dd {
+  color: #999999;
+}
+/* line 142, sass/manga.scss */
+#appFrame_container #container_wrap .store_list li .store_info dd a {
+  display: block;
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  width: 166px;
+  height: 63px;
+  font-size: 0;
+  background: url("../style/images/btn.png") no-repeat;
+}
+/* line 152, sass/manga.scss */
+#appFrame_container #container_wrap .store_list li .store_info dd a:hover {
+  bottom: 8px;
+}
+/* line 161, sass/manga.scss */
+#appFrame_container #container_wrap .news_list table {
+  width: 100%;
+}
+/* line 164, sass/manga.scss */
+#appFrame_container #container_wrap .news_list th {
+  background-color: #333333;
+  color: white;
+}
+/* line 168, sass/manga.scss */
+#appFrame_container #container_wrap .news_list th, #appFrame_container #container_wrap .news_list td {
+  border: solid 2px #333;
+  border-width: 2px 0;
+  width: 33%;
+  padding: 15px;
+}
+/* line 174, sass/manga.scss */
+#appFrame_container #container_wrap .news_list .m_author {
+  color: #999999;
+}
+
+/* define mobile specific styles come here */
+@media screen and (min-width: 320px) and (max-width: 640px) {
+  /* line 185, sass/manga.scss */
+  #appFrame_container header {
+    height: 50px;
+    line-height: 50px;
+  }
+  /* line 189, sass/manga.scss */
+  #appFrame_container header h1:after {
+    background-size: 40%;
+    height: 50px;
+    position: relative;
+    top: -2px;
+  }
+  /* line 195, sass/manga.scss */
+  #appFrame_container header .back {
+    background-size: 40%;
+  }
+  /* line 198, sass/manga.scss */
+  #appFrame_container header .menu_list {
+    background-size: 65%;
+  }
+}

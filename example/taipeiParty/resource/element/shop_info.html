@@ -1,0 +1,67 @@
+﻿<div id="containerFluid">
+  <div class="rowFluid">
+    <div id="shopInfo">
+      {{#with one.poi}}
+        <div>
+		      {{#if  img2.length}}
+			       <img class="pic" src="{{img2}}" alt="{{title}}"/>
+          {{/if}}
+
+		      <p class="reservation">
+            預約訂位 - {{tel}}
+            <a class="call" href="tel:{{tel}}">訂位去</a>
+		      </p>
+        </div>
+        <section>
+          <h2>{{p_name}}</h2>
+          <p class="address">
+            {{address}}
+            <a href="#" data-btn-switch="where" data-page-parameter="sn:{{sn}}, lat: {{lat}}, lng: {{lng}}" target="_blank">
+				      Google地圖
+			       </a>
+          </p>
+
+          {{#if linkWeb.length}}
+				    <p class="linkArea">
+					   網站: <span data-btn-external="{{linkWeb}}">{{linkWeb}}</span>
+				    </p>
+			    {{/if}}
+
+			    {{#if linkFB.length}}
+				    <p class="linkArea">
+              Facebook: <span data-btn-external="{{linkFB}}">{{linkFB}}</span>
+				    </p>
+			    {{/if}}
+        </section>
+
+        <section>
+          <h3>營業時間:</h3>
+          <p>{{{openingDesc}}}</p>
+        </section>
+
+        <section>
+          <h3>消費方式:{{payment}}</h3>
+		      <p>{{{price1}}}</p>
+		      <p>{{{price2}}}</p>
+          <p>{{{description}}}</p>
+        </section>
+
+        {{#if comment.length}}
+        	<section>
+        	  <h3>備註:</h3>
+        	  <p>{{{comment}}}</p>
+        	</section>
+        {{/if}}
+
+        {{#if special.length}}
+        	<section>
+        	  <h3>額外資訊:</h3>
+        	  <p>{{{special}}}</p>
+        	</section>
+        {{/if}}
+
+
+      {{/with}}
+    </div>
+  </div>
+</div>

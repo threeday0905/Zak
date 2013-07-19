@@ -1,0 +1,27 @@
+﻿<div id="containerFluid">
+  <div class="rowFluid newsList">
+    <ul>
+      {{#each poi_news}}
+        <li>
+          <a data-page-filter="poi_news:sn:{{sn}},poi:sn:{{p_sn}}" data-btn-switch="newsInfo" class="page-button" href="#">
+            <div class="pic">
+              {{#if img.length}}
+                <img src="{{img}}" alt="{{title}}"/>
+              {{else}}
+                <img src="style/images/default_bg.png" alt="{{title}}"/>
+              {{/if}}
+            </div>
+
+            <ol>
+              <li><h3>{{title}}@{{poi.p_name}}</h3></li>
+              <li class="pubIntro">
+                {{date_begin}} 至 {{date_end}}
+              </li>
+            </ol>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+

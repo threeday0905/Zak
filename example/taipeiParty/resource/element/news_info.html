@@ -1,0 +1,44 @@
+﻿<div id="containerFluid">
+  <div id="shopInfo" class="rowFluid">
+	  <div>
+		  {{#if one.poi_news.img2.length}}
+		    <img class="pic" src="{{one.poi_news.img2}}" alt="{{one.poi_news.title}}"/>
+            {{else}}
+            <img class="pic" src="{{one.poi_news.img}}" alt="{{one.poi_news.title}}"/>
+		  {{/if}}
+		  <p class="reservation">
+		    預約訂位 - {{one.poi.tel}}
+	      <a class="call" href="tel:{{one.poi.tel}}">訂位去</a>
+		  </p>
+    </div>
+
+    <section>
+      <h2>{{one.poi_news.title}}@{{one.poi.p_name}}</h2>
+      <p class="address">
+        {{one.poi.address}}
+        <a href="#" data-btn-switch="where" data-page-parameter="sn: {{one.poi.sn}}" target="_blank">Google地圖</a>
+      </p>
+    </section>
+
+	  <section>
+      <h3>活動介紹:</h3>
+		  <p>
+        {{{one.poi_news.content}}}
+		  </p>
+    </section>
+
+	  <section>
+      <h3>活動時間:</h3>
+		  <p>
+        {{one.poi_news.date_begin}} 至 {{one.poi_news.date_end}}
+		  </p>
+    </section>
+
+    <section>
+      <h3>營業時間:</h3>
+      <p>{{{one.poi.openingDesc}}}</p>
+    </section>
+  </div>
+</div>
+
+

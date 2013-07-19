@@ -1,0 +1,13 @@
+.iphoneWraper{
+  background:url('images/phone_bg.png') no-repeat;
+  width:340px;
+  height:579px;
+  padding: 147px 30px 122px 35px;
+  float: left;
+  margin-right: 25px;
+}
+.iphoneWraper .iphoneContainer{
+  height:100%;
+  width:100%;
+  position: relative;
+}

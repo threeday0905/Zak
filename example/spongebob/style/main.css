@@ -1,0 +1,57 @@
+.spongebob > div {
+  height: 88%;
+  background: #fff;
+}
+
+.spongebob > div h1 {
+  padding: 20px;
+  font-size: 40px;
+  text-align: center;
+  font-weight: bold;
+  color: #FEF46E;
+  text-shadow: 3px 3px #AEAC0C;
+  text-transform: uppercase;
+}
+
+.spongebob > div img {
+  width: 100%;
+
+  -webkit-transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -o-transition: all 1s ease-out;
+  -ms-transition: all 1s ease-out;
+  transition: all 1s ease-out;
+}
+
+.spongebob > div img:active {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.spongebob > footer {
+  height: 12%;
+}
+
+.spongebob > footer nav,.spongebob > footer nav a {
+  height: 100%;
+}
+
+.spongebob > footer a {
+  cursor: pointer;
+  float: left;
+  width: 20%;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+
+}
+
+.spongebob > footer a img {
+  width: 100%;
+  max-height: 100%;
+}

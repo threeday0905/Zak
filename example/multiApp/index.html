@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Zak.js Test Pages - Multi Apps in one page</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="style/reset.css" media="screen" />
+	<link rel="stylesheet" href="style/iphone.css" media="screen" />
+  <link rel="stylesheet" href="style/spongebob.css" media="screen" />
+  <link rel="stylesheet" href="style/party.css" media="screen" />
+  <link rel="stylesheet" href="style/manga.css" media="screen" />
+
+  <script src="components/modernizr/modernizr.js"></script>
+</head>
+
+<body>
+
+  <script src="components/jquery/jquery.js"></script>
+  <script src="components/handlebars/handlebars.js"></script>
+  <script src="../../dest/zak.js"></script>
+
+  <script src="https://maps.google.com/maps/api/js?sensor=false&language=zh-TW"></script>
+  <script src="components/infobox_packed.js"></script>
+
+  <div class="iphoneWraper">
+  	<div id="partyApp" class="party iphoneContainer"></div>
+  </div>
+
+  <div class="iphoneWraper">
+    <div id="spongebobApp" class="spongebob iphoneContainer"></div>
+  </div>
+
+  <div class="iphoneWraper" style="display:none">
+    <div id="mangaApp" class="manga iphoneContainer"></div>
+  </div>
+
+  <script>
+    var tppZak = new Zak("partyApp", {
+      appName: "MultiApp_TaipeiParty",
+      indexPage: "shop",
+      structure: "main",
+      mask: { element: "mask", className: "loading"},
+      pages: [
+        { key: "shop"    , title: "夜店列表", script: "shop",   material: "poi"          },
+        { key: "news"    , title: "最新消息", script: "news",   material: "poi poi_news" },
+        { key: "where"   , title: "該去哪裡", script: "where"   },
+        { key: "taxi"    , title: "載我回家", material: "taxi"  },
+        { key: "contact" , title: "聯絡我們", script: "contact" },
+        { key: "shopInfo", title: "${one.poi.p_name}"    ,   material: "poi",             nav: "shop" },
+        { key: "newsInfo", title: "${one.poi_news.title}",   material: "poi poi_news", nav: "news" }
+      ],
+      sourcePath: {
+        element:  "../taipeiParty/resource/element/${0}.html",
+        template: "../taipeiParty/resource/template/${0}.html",
+        material: "http://www.beerfriday.net/tpp/res/${0}.php",
+        script:   "../taipeiParty/resource/script/${0}.js"
+      }
+    });
+  </script>
+
+  <script>
+    var spongeZak = new Zak("spongebobApp", {
+      appName: "MultiApp_SpongeBob",
+      structure: "main",
+      indexPage: {key: "spongebob", filter: "role:sn:spongebob" },
+      pages: [
+        { key: "spongebob" , title: "SpongeBob"   , template: "show", material: "role" },
+        { key: "patrick"   , title: "Patrick Star", template: "show", material: "role" },
+        { key: "gary"      , title: "Gary"        , template: "show", material: "role" },
+        { key: "krabs"     , title: "Mr. Krabs"   , template: "show", material: "role" },
+        { key: "sandy"     , title: "Sandy Cheeks", template: "show", material: "role" }
+      ],
+      sourcePath: {
+        element:  "../spongebob/resource/element/${0}.html",
+        template: "../spongebob/resource/template/${0}.html",
+        material: "../spongebob/resource/material/${0}.json",
+        script:   "../spongebob/resource/script/${0}.js"
+      }
+    });
+  </script>
+
+  <script>
+    var zak = new Zak("mangaApp", {
+      appName: "MultiApp_TaipeiManga",
+      structure: "main",
+      mask: { element: "mask", className: "loading"},
+      pages: [
+        { key: "index"   , title: "台北漫遊去" },
+        { key: "news"    , title: "新書快報",  material: "manga" },
+        { key: "store"   , title: "租書店列表" },
+        { key: "where"   , title: "該去哪裡" }
+      ],
+      sourcePath: {
+        element:  "../taipeiManga/resource/element/${0}.html",
+        template: "../taipeiManga/resource/template/${0}.html",
+        material: "http://www.beerfriday.net/tpm/res/${0}.php",
+        script:   "../taipeiManga/resource/script/${0}.js"
+      }
+    });
+  </script>
+
+</body>
+</html>

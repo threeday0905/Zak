@@ -259,6 +259,7 @@
           clickFn = function(e) {
             fn.call(dom, e);
             e.preventDefault();
+            e.stopPropagation();
             return false;
           };
 
@@ -377,9 +378,16 @@
         cache.available = true;
         cache.setItem = function(key, data) { storage.setItem(key, json.stringify(data)); };
         cache.getItem = function(key) { return json.parse(storage.getItem(key) || '{}'); };
+        cache.clear = function() {
+          storage.clear();
+        };
       } else {
-        cache = function() {this.available = false;};
+        cache = function() {
+          this.available = false;
+          this.clear = function() {};
+        };
         cache.available = false;
+        cache.clear = function() {};
       }
       return cache;
     }()),
@@ -1480,23 +1488,33 @@ var ajax = function(url, options, methods) {
       each.call(btns, function(btn) {
         var page = btn.getAttribute(keys.btnSwitch);
         if (!page || swak.dom.data.take(btn, 'btnEvtBinded')) { return;}
-        swak.evt.touch(btn, function() {
+        swak.evt.touch(btn, function(e) {
+          e.preventDefault();
           zak.switchTo({
             key: page,
             filter: btn.getAttribute(keys.mtrFilter),
             parameter: btn.getAttribute(keys.mtrParameter)
           });
+          return false;
         });
         swak.dom.data.put(btn, 'btnEvtBinded', true);
       });
       each.call(refreshBtns, function(btn) {
         if (swak.dom.data.take(btn, 'btnBinded')) { return;}
-        swak.evt.touch(btn, function() { zak.refreshTo(); });
+        swak.evt.touch(btn, function(e) {
+          e.preventDefault();
+          zak.refreshTo();
+          return false;
+        });
         swak.dom.data.put(btn, 'btnEvtBinded', true);
       });
       each.call(backBtns, function(btn) {
         if (swak.dom.data.take(btn, 'btnBinded')) { return;}
-        swak.evt.touch(btn, function() { zak.backTo(); });
+        swak.evt.touch(btn, function(e) {
+          e.preventDefault();
+          zak.backTo();
+          return false;
+        });
         swak.dom.data.put(btn, 'btnEvtBinded', true);
       });
     }

@@ -1,0 +1,35 @@
+﻿<div id="containerFluid">
+  <div class="rowFluid">
+    <ul>
+      {{#each poi}}
+        <li>
+          <a data-page-filter="poi:sn:{{sn}}" data-btn-switch="shopInfo" class="page-button" href="#">
+            <span class="icon">&#160;</span>
+            <div class="pic">
+              {{#if businessDay}}
+              {{else}}
+                  <em class="todayClose">今日休息</em>
+              {{/if}}
+
+              {{#if img.length}}
+                <img src="{{img}}" alt="{{p_name}}"/>
+              {{else}}
+                <img src="style/images/default_bg.png" alt="{{p_name}}"/>
+              {{/if}}
+            </div>
+            <ol>
+              <li><h3>{{p_name}}</h3></li>
+              <li class="pubIntro">
+                {{address}}
+              </li>
+              <li class="specialInfo">
+                {{tel}}
+              </li>
+            </ol>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
